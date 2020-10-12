@@ -216,12 +216,10 @@ def rank_articles(mainArticle, relatedArticles):
 
         print(textrank(mainArticle, article, words=250))
         summary, score = textrank(mainArticle, article)
-        if score == [] or summary == []:
-            continue
-            
-        article["summary"] = summary
-        article["score"] = score
-        ranking.append(article)
+        if summary != [] and score != []:
+            article["summary"] = summary
+            article["score"] = score
+            ranking.append(article)
 
     # The output of this needs to be the structure of the project
     # It has to be the same article structure 
@@ -316,8 +314,11 @@ def extract_keywords_yake(text, phrase_length, num_keywords):
 
   valid_keywords = []
   print(keywords)
+  for pair in keywords:
+    if pair[0] >= 0.075:
+        valid_keywords.append(pair)
 
-  return keywords
+  return valid_keywords
 
 def extract_keywords(text, title):
     '''
@@ -335,14 +336,12 @@ def extract_keywords(text, title):
 
     getKeywordsURL += text
     keywordResTitle = extract_keywords_yake(title, 2, 2)
-    print(keywordResTitle)
-    # keywordResTitle = [(score, phrase) for score, phrase in keywordResTitle if score > TITLE_THRESHOLD]
+    keywordResTitle = [(score, phrase) for score, phrase in keywordResTitle if score > TITLE_THRESHOLD]
 
     keywordResText = extract_keywords_yake(text, 2, 3)
-    print(keywordResText)
-    # keywordResText = [(score, phrase) for score, phrase in keywordResText if score > TEXT_THRESHOLD]
+    keywordResTitle = [(score, phrase) for score, phrase in keywordResTitle if score > TEXT_THRESHOLD]
 
-    keywordsRes = list(set(keywordResText + keywordResTitle))
+    keywordsRes = keywordResText + keywordResTitle
     keywords = []
 
     print("title keywords")

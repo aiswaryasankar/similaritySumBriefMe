@@ -154,7 +154,10 @@ def getDifferences(summary1, summary2):
     return diff
 
 
-def summarize(text1, text2, words=250, language="english", split=False, scores=False, additional_stopwords=None):
+def summarize(article1, article2, words=250, language="english", split=False, scores=False, additional_stopwords=None):
+
+    text1=article1["text"]
+    text2=article2["text"]
 
     if not isinstance(text1, str):
         raise ValueError("Text parameter must be a Unicode object (str)!")
