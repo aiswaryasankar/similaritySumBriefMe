@@ -15,5 +15,4 @@ RUN pip install -r requirements.txt
 
 COPY src /app
 
-CMD exec gunicorn --bind :8080 --workers 5 --threads 2 --timeout 0 main:server
-
+CMD exec gunicorn --bind :8080 --workers 5 --threads 2 --timeout 0 main:server 
